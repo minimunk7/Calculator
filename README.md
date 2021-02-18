@@ -28,5 +28,6 @@ Säg till i chatten och hoppa in i en kanal
 
 What happens if someone feels another person isn’t doing their fair share?
 Omdirigera uppgifter
+
 What happens if someone is not communicating in the manner or frequency agreed upon?
 
