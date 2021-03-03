@@ -1,116 +1,23 @@
-module Main(main) where
+module Render where
 
 import Graphics.Gloss
 import Graphics.Gloss.Interface.Pure.Game
 import Graphics.Gloss.Data.Picture
 
-import Render
 import Initial
-import Input
---import fox grej
 
-
-
-main :: IO ()
-main = play
-       windowDisplay
-       Render.backgroundColor
-       20
-       Initial.initialCalculator
-       Render.render
-       Input.inputHandler
-       placeholder
-
-windowDisplay :: Display
-windowDisplay = InWindow "Calculator" (1028, 720) (200, 400)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{-
-initialCalc (a,(x,y)) = pictures (Render.buttonsAndFields (a,(x,y)))
-
-render :: Render.Räknare -> Picture
-render (a,(x,1)) = pictures (Render.buttonsAndFields (a,(x,1)))
-render (a,(x,y)) = initialCalc (a,(x,y))
-
-
-
-
-
-
-
-
--}
---Updaterar frekvent
-placeholder _ räknare = räknare
-
-cycler _ (a,(x,y))
-  | (shallWeSolve (a,(x,y))) == True = ((solver_func a),(x,y))
-  | otherwise = (a,(x,y))
-
-shallWeSolve (a,(x,y)) = if (filter (== "SOLVE" ) a) /= [] then True else False
-
---Solver!!!!!!!
-solver_func räknare = undefined
-
-
-{-
---Inputhandler
-inputHandler :: Event -> Render.Räknare -> Render.Räknare
-inputHandler (EventKey (MouseButton LeftButton) Down _ (x', y')) (a,(x,y))
-  | ((x'<= 250) && (x' >= 150)) && ((y'<= 140) && (y' >= 20)) = ("+"++a,(x,y))
-  | ((x'<= 250) && (x' >= 150)) && ((y'<= 20) && (y' >= -100)) = ("-"++a,(x,y))
-  | ((x'<= 250) && (x' >= 150)) && ((y'<= -100) && (y' >= -220)) = ("/"++a,(x,y))
-  | ((x'<= 250) && (x' >= 150)) && ((y'<= -220) && (y' >= -340)) = ("EVLOS"++a,(x,y))
-  
-  | ((x'<= 150) && (x' >= 50)) && ((y'<= 140) && (y' >= 20)) = ("*"++a,(x,y))
-  | ((x'<= 150) && (x' >= 50)) && ((y'<= 20) && (y' >= -100)) = ("9"++a,(x,y))
-  | ((x'<= 150) && (x' >= 50)) && ((y'<= -100) && (y' >= -220)) = ("6"++a,(x,y))
-  | ((x'<= 150) && (x' >= 50)) && ((y'<= -220) && (y' >= -340)) = ("3"++a,(x,y))
-
-  | ((x'<= 50) && (x' >= -50)) && ((y'<= 140) && (y' >= 20)) = ("soc"++a,(x,y))
-  | ((x'<= 50) && (x' >= -50)) && ((y'<= 20) && (y' >= -100)) = ("8"++a,(x,y))
-  | ((x'<= 50) && (x' >= -50)) && ((y'<= -100) && (y' >= -220)) = ("5"++a,(x,y))
-  | ((x'<= 50) && (x' >= -50)) && ((y'<= -220) && (y' >= -340)) = ("2"++a,(x,y))
-
-  | ((x'<= -50) && (x' >= -150)) && ((y'<= 140) && (y' >= 20)) = ("nis"++a,(x,y))
-  | ((x'<= -50) && (x' >= -150)) && ((y'<= 20) && (y' >= -100)) = ("7"++a,(x,y))
-  | ((x'<= -50) && (x' >= -150)) && ((y'<= -100) && (y' >= -220)) = ("4"++a,(x,y))
-  | ((x'<= -50) && (x' >= -150)) && ((y'<= -220) && (y' >= -340)) = ("1"++a,(x,y))
-
-  | ((x'<= -150) && (x' >= -250)) && ((y'<= 140) && (y' >= 20)) = ([],(x,y))
-  | ((x'<= -150) && (x' >= -250)) && ((y'<= 20) && (y' >= -100)) = ("trqs"++a,(x,y))
-  | ((x'<= -150) && (x' >= -250)) && ((y'<= -100) && (y' >= -220)) = ((backspacer a),(x,y))
-  | ((x'<= -150) && (x' >= -250)) && ((y'<= -220) && (y' >= -340)) = undefined
-inputHandler _ räknare = räknare
-
-backspacer string
-  | take 3 string == "sin" = drop 3 string
-  | take 3 string == "cos" = drop 3 string
-  | take 3 string == "tan" = drop 3 string
-  | otherwise = drop 1 string
--}
-
-{-
 --Renderingen av bilderna
 
-initialCalculator = ([],(0,0))
+render :: Initial.Räknare -> Picture
+render (a,(x,1)) = pictures (buttonsAndFields (a,(x,1)))
+render (a,(x,y)) = initialCalc (a,(x,y))
 
+initialCalc (a,(x,y)) = pictures (buttonsAndFields (a,(x,y)))
+
+backgroundColor :: Color
 backgroundColor = black
 
+buttonsAndFields :: Initial.Räknare -> [Picture]
 buttonsAndFields ([],(x,y)) = [Color white (Translate 150 37 (fromOperators "+")),
                                Color white (Translate 150 (-87) (fromOperators "-")),
                                Color white (Translate 150 (-207) (fromOperators "/")),
@@ -195,11 +102,6 @@ buttonsAndFields (a,(x,y))  = [Color white (Translate 150 37 (fromOperators "+")
                                Color white (Translate (-200) (-280) (rectangleWire 100 120)),
                                Color white (Translate x (0+250) (rectangleWire  1000 175)),
                                Color white (Translate (x-500)(0+200) (Text (reverse a)))]
-                         
--}
-
-
-{-
 -- Tecknena på miniräknaren
 numbers = [(10,"_"),(1,"1"),(2,"2"),(3,"3"),(4,"4"),(5,"5"),(6,"6"),(7,"7"),(8,"8"),(9,"9"),(0,"0")]
 
@@ -207,70 +109,7 @@ operators = ["+","-","*","=","R","/"]
 
 fromJust (Just x) = x
 
+fromOperators :: [Char] -> Picture
 fromOperators x = Text (head (filter (== x) operators))
+fromNumbers :: Integer -> Picture
 fromNumbers x = Text (fromJust (lookup x numbers))
--}
---Rester, kan komma till användening kanske, perhaps, sometimes, en gång i framtiden.
-
---render (x,y) = pictures    [Color white (Translate x y (rectangleWire 200 100)),
---                              Color white (Translate (x-50) (y-43) text'),
---                              Color white (Translate x (y+250) (rectangleWire  1000 175)),
---                              Color white (Translate (x-100)(y+180) text' )]
-
-{-
-buttonsAndFields (a,(x,1)) = [Color white (Translate x 0 (rectangleWire 200 100)),
-                          Color white (Translate (x-50) (-43) (fromOperators "+")),
-                          Color white (Translate x (0+250) (rectangleWire  1000 125)),
-                          Color white (Translate (x-200)(0+200) (fromOperators "+"))]
-buttonsAndFields (a,(x,2)) = [Color white (Translate x 0 (rectangleWire 200 100)),
-                          Color white (Translate (x-50) (-43) (fromOperators "+")),
-                          Color white (Translate x (0+250) (rectangleWire  1000 125)),
-                          Color white (Translate (x-200)(0+200) (fromOperators "+"))]
-
-buttonsAndFields (a,(x,3)) = [Color white (Translate x 0 (rectangleWire 200 100)),
-                          Color white (Translate (x-50) (-43) (fromOperators "+")),
-                          Color white (Translate x (0+250) (rectangleWire  1000 125)),
-                          Color white (Translate (x-200)(0+200) (fromOperators "+"))]
-
-buttonsAndFields (a,(x,4)) = [Color white (Translate x 0 (rectangleWire 200 100)),
-                          Color white (Translate (x-50) (-43) (fromOperators "+")),
-                          Color white (Translate x (0+250) (rectangleWire  1000 125)),
-                          Color white (Translate (x-200)(0+200) (fromOperators "+"))]
-
-buttonsAndFields (a,(x,5)) = [Color white (Translate x 0 (rectangleWire 200 100)),
-                          Color white (Translate (x-50) (-43) (fromOperators "+")),
-                          Color white (Translate x (0+250) (rectangleWire  1000 125)),
-                          Color white (Translate (x-200)(0+200) (fromOperators "+"))]
-
-buttonsAndFields (a,(x,6)) = [Color white (Translate x 0 (rectangleWire 200 100)),
-                          Color white (Translate (x-50) (-43) (fromOperators "+")),
-                          Color white (Translate x (0+250) (rectangleWire  1000 125)),
-                          Color white (Translate (x-200)(0+200) (fromOperators "+"))]
-
-buttonsAndFields (a,(x,7)) = [Color white (Translate x 0 (rectangleWire 200 100)),
-                          Color white (Translate (x-50) (-43) (fromOperators "+")),
-                          Color white (Translate x (0+250) (rectangleWire  1000 125)),
-                          Color white (Translate (x-200)(0+200) (fromOperators "+"))]
-
-buttonsAndFields (a,(x,8)) = [Color white (Translate x 0 (rectangleWire 200 100)),
-                          Color white (Translate (x-50) (-43) (fromOperators "+")),
-                          Color white (Translate x (0+250) (rectangleWire  1000 125)),
-                          Color white (Translate (x-200)(0+200) (fromOperators "+"))]
-
-buttonsAndFields (a,(x,9)) = [Color white (Translate x 0 (rectangleWire 200 100)),
-                          Color white (Translate (x-50) (-43) (fromOperators "+")),
-                          Color white (Translate x (0+250) (rectangleWire  1000 125)),
-                          Color white (Translate (x-200)(0+200) (fromOperators "+"))]
-
-buttonsAndFields (a,(x,10)) = [Color white (Translate x 0 (rectangleWire 200 100)),
-                          Color white (Translate (x-50) (-43) (fromOperators "+")),
-                          Color white (Translate x (0+250) (rectangleWire  1000 125)),
-                          Color white (Translate (x-200)(0+200) (fromOperators "+"))]
-
-buttonsAndFields (a,(x,11)) = [Color white (Translate x 0 (rectangleWire 200 100)),
-                          Color white (Translate (x-50) (-43) (fromOperators "+")),
-                          Color white (Translate x (0+250) (rectangleWire  1000 125)),
-                          Color white (Translate (x-200)(0+200) (fromOperators "+"))]
-
--}
-
