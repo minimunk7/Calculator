@@ -74,11 +74,11 @@ firstPrio (x:"*":y:xs) = [show ((read x) * (read y::Float))] ++ (firstPrio xs)
 
 {- calculate list
      evaluates a list of strings into a float value
-     PRE:  Htey must be ordered correctly alternating between numbers and operator and cannot end on an operator
+     PRE:  They must be ordered correctly alternating between numbers and operator and cannot end on an operator
      RETURNS: the calculated result of the lists content
      SIDE EFFECTS: can cause exceptions
      EXAMPLES: [1" ,"*" ,"2" ,"+" ,"3" ,"*" ,"4" ,"/" ,"5"] = 4.4
-  -}
+-}
 
 calculate :: [String] -> Float
 calculate list 
