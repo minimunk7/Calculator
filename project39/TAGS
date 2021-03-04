@@ -1,0 +1,49 @@
+
+./Setup.hs,15
+main main1,2
+
+./app/Main.hs,126
+module Main(Main0,1
+main main27,28
+windowDisplay windowDisplay37,38
+placeholder placeholder55,56
+cycler cycler57,58
+
+./test/Spec.hs,15
+main main0,1
+
+./src/input.hs,86
+module Input Input0,1
+inputHandler inputHandler18,19
+backspacer backspacer53,54
+
+./src/initial.hs,101
+module Initial Initial0,1
+type RÃ¤knare RÃ¤knare13,14
+initialCalculator initialCalculator15,16
+
+./src/Lib.hs,319
+module Lib Lib0,1
+checkOperator checkOperator11,12
+checkEqual checkEqual29,30
+getValuesAux getValuesAux49,50
+getValues getValues62,63
+secondPrio secondPrio75,76
+firstPrio firstPrio94,95
+calculate calculate114,115
+test1 test1123,124
+test2 test2125,126
+test3 test3127,128
+runtests runtests130,131
+
+./src/render.hs,321
+module Render Render0,1
+render render15,16
+backgroundColor backgroundColor19,20
+buttonsAndFields buttonsAndFields30,31
+numbers numbers160,161
+operators operators163,164
+fromJust fromJust166,167
+fromOperators fromOperators169,170
+fromNumbers fromNumbers172,173
+shiftCoordinates shiftCoordinates175,176
